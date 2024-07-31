@@ -35,3 +35,7 @@ go install github.com/a-h/templ/cmd/templ@latest
 
 5. Install the dependencies `go mod download`
 6. Run the project `make dev`
+
+### Readings
+
+Please checkout the [Docs](./docs/) for [Project Structure](./docs/structure.md) and [Project Decisions](./docs/decisions.md)
