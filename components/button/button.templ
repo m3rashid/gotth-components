@@ -1,0 +1,48 @@
+package button
+
+import (
+	"github.com/m3rashid/gotth-components/utils"
+	"strings"
+)
+
+var ButtonVariantTypes = []string{"primary", "danger", "secondary", "disabled", "sucess", "simple"}
+var ButtonVariants = map[string]string{
+	"primary":   "bg-primary hover:bg-primary focus-visible:outline-primary",
+	"danger":    "bg-danger hover:bg-danger focus-visible:outline-danger",
+	"secondary": "bg-secondary hover:bg-secondary focus-visible:outline-secondary",
+	"disabled":  "bg-disabled hover:bg-disabled focus-visible:outline-disabled",
+	"sucess":    "bg-success hover:bg-success focus-visible:outline-success",
+	"simple":    "bg-white text-gray-700 hover:bg-gray-50 focus-visible:outline-gray-200 border border-gray-300",
+}
+
+var ButtonSizeTypes = []string{"small", "medium", "large"}
+var ButtonSizes = map[string]string{
+	"small":  "px-3 py-1.5 text-sm",
+	"medium": "px-5 py-2 text-base",
+	"large":  "px-7 py-2 text-base",
+}
+
+type ButtonProps struct {
+	children     templ.Component
+	buttonType   string
+	size         string
+	variant      string
+	class        string
+	onClick      templ.ComponentScript
+	onMouseEnter templ.ComponentScript
+	onMouseLeave templ.ComponentScript
+}
+
+templ Button(props ButtonProps) {
+	<button
+		onClick={ props.onClick }
+		type={ utils.Ternary(props.buttonType != "", props.buttonType, "button") }
+		class={ strings.Join([]string{
+			utils.Ternary(utils.Includes(ButtonVariantTypes, props.variant), ButtonVariants[props.variant], ButtonVariants["primary"]),
+			utils.Ternary(utils.Includes(ButtonSizeTypes, props.size), ButtonSizes[props.size], ButtonVariants["medium"]),
+			props.class,
+		}, " ") }
+	>
+		@props.children
+	</button>
+}
