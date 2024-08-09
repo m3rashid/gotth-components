@@ -1,0 +1,31 @@
+package page
+
+import "os"
+
+type PageProps struct {
+	Title string
+	Children templ.Component
+}
+
+templ Page(props PageProps) {
+	<html>
+		<head>
+			<title>{ props.Title }</title>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<script src="static/script/htmx.min.js"></script>
+			if os.Getenv("env") == "production" {
+				<link rel="stylesheet" href="static/css/style.min.css"/>
+			} else {
+				<link rel="stylesheet" href="static/css/style.css" />
+			}
+		</head>
+		<body class="h-screen w-screen flex items-center justify-center gap-8 flex-wrap">
+		  @props.Children 
+			// for _, component := range props.Children {
+			// 	@component()
+			// }
+		</body>
+	</html>
+}
+

@@ -1,9 +1,6 @@
 package button
 
-import (
-	"github.com/m3rashid/gotth-components/utils"
-	"strings"
-)
+import "github.com/m3rashid/gotth-components/utils"
 
 var ButtonVariantTypes = []string{"primary", "danger", "secondary", "disabled", "sucess", "simple"}
 var ButtonVariants = map[string]string{
@@ -23,26 +20,31 @@ var ButtonSizes = map[string]string{
 }
 
 type ButtonProps struct {
-	children     templ.Component
-	buttonType   string
-	size         string
-	variant      string
-	class        string
-	onClick      templ.ComponentScript
-	onMouseEnter templ.ComponentScript
-	onMouseLeave templ.ComponentScript
+	ButtonType   string
+	Size         string
+	Variant      string
+	Class        string
+	Label string
+	OnClick      templ.ComponentScript
+	OnMouseEnter templ.ComponentScript
+	OnMouseLeave templ.ComponentScript
 }
 
 templ Button(props ButtonProps) {
 	<button
-		onClick={ props.onClick }
-		type={ utils.Ternary(props.buttonType != "", props.buttonType, "button") }
-		class={ strings.Join([]string{
-			utils.Ternary(utils.Includes(ButtonVariantTypes, props.variant), ButtonVariants[props.variant], ButtonVariants["primary"]),
-			utils.Ternary(utils.Includes(ButtonSizeTypes, props.size), ButtonSizes[props.size], ButtonVariants["medium"]),
-			props.class,
-		}, " ") }
+		onclick={ props.OnClick }
+		type={ utils.Ternary(props.ButtonType != "", props.ButtonType, "button") }
+		class={
+		"inline-flex items-center justify-center gap-x-2 rounded-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+			utils.Ternary(props.Variant != "" && utils.Includes(ButtonVariantTypes, props.Variant), ButtonVariants[props.Variant], ButtonVariants["simple"]),
+			utils.Ternary(props.Size != "" && utils.Includes(ButtonSizeTypes, props.Size), ButtonSizes[props.Size], ButtonVariants["medium"]),
+			props.Class,
+		}
 	>
-		@props.children
+		if props.Label != "" {
+			{ props.Label }
+		} else {
+			{ children... }
+		}
 	</button>
 }

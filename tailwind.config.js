@@ -1,23 +1,41 @@
-const colors = require("tailwindcss/colors");
+// const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ["internal/templates/*.templ"],
+	content: ["components/**/*.templ", "components/*.go"],
 	theme: {
-		container: {
-			center: true,
-			padding: {
-				DEFAULT: "1rem",
-				mobile: "2rem",
-				tablet: "4rem",
-				desktop: "5rem",
-			},
-		},
 		extend: {
+			fontFamily: {
+				sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+			},
 			colors: {
-				primary: colors.blue,
-				secondary: colors.yellow,
-				neutral: colors.gray,
+				primary: "#a78bfa", // violet-400
+				primaryLight: "#ddd6fe", // violet-200
+
+				danger: "#fb7185", // rose-400
+				dangerLight: "#fecdd3", // rose-200
+
+				secondary: "#22d3ee", // cyan-400
+				secondaryLight: "#a5f3fc", // cyan-200
+
+				disabled: "#9ca3af", // gray-400
+				disabledLight: "#e5e7eb", // gray-200
+
+				success: "#4ade80", // green-400
+				successLight: "#bbf7d0", // green-200
+
+				pageBg: "#e5e7eb", // gray-200
+				borderColor: "#d1d5db", // gray-300
+
+				textColor: "#111827", // gray-900
+
+				linkVisited: "#9333ea", // purple-600
+				linkUnvisited: "#2563eb", // blue-600
+				linkActive: "#db2777", // pink-600
+
+				skeletonLight: "#e5e7eb", // gray-200
+				skeletonDark: "#d1d5db", // gray-300
 			},
 		},
 	},
